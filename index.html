@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>浪漫告白</title>
+    <style>
+        body {
+            background-color: #ffe6f2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: '微软雅黑', sans-serif;
+            overflow: hidden;
+        }
+
+        h1 {
+            color: #ff69b4;
+            font-size: 3em;
+            text-align: center;
+            margin-bottom: 50px;
+            animation: heartBeat 1.2s infinite;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        @keyframes heartBeat {
+            0% { transform: scale(1); }
+            15% { transform: scale(1.15); }
+            30% { transform: scale(0.95); }
+            45% { transform: scale(1.1); }
+            60% { transform: scale(0.98); }
+            75% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .buttons {
+            display: flex;
+            gap: 30px;
+            transition: 0.3s;
+        }
+
+        #yesBtn {
+            background-color: #ff4444;
+            color: white;
+            border: none;
+            padding: 20px 40px;
+            font-size: 1.5em;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(255,68,68,0.3);
+        }
+
+        #noBtn {
+            background-color: #4444ff;
+            color: white;
+            border: none;
+            padding: 20px 40px;
+            font-size: 1.5em;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(68,68,255,0.3);
+        }
+
+        #yesBtn:hover, #noBtn:hover {
+            transform: scale(1.05);
+            filter: brightness(1.1);
+        }
+
+        .petal {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background: linear-gradient(45deg, #ff99cc, #ff6699);
+            clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            from { top: -10vh; }
+            to { top: 110vh; }
+        }
+    </style>
+</head>
+<body>
+    <h1>我们可以成为恋人吗？❤️</h1>
+    <div class="buttons">
+        <button id="yesBtn" onclick="handleYes()">可以</button>
+        <button id="noBtn" onclick="handleNo()">不可以</button>
+    </div>
+
+    <script>
+        // 自动创建花瓣效果
+        function createPetals() {
+            const petalCount = 15;
+            for (let i = 0; i < petalCount; i++) {
+                const petal = document.createElement('div');
+                petal.className = 'petal';
+                petal.style.left = Math.random() * 100 + 'vw';
+                petal.style.animationDuration = Math.random() * 3 + 5 + 's';
+                petal.style.animationDelay = Math.random() * 5 + 's';
+                petal.style.opacity = Math.random() * 0.5 + 0.5;
+                document.body.appendChild(petal);
+            }
+        }
+        createPetals();
+
+        let scaleFactor = 1;
+        
+        function handleYes() {
+            new Audio('https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3').play();
+            setTimeout(() => {
+                window.location.href = "success.html";
+            }, 800);
+        }
+
+        function handleNo() {
+            const noBtn = document.getElementById("noBtn");
+            const yesBtn = document.getElementById("yesBtn");
+            
+            scaleFactor *= 0.8;
+            noBtn.style.transform = `scale(${scaleFactor})`;
+            yesBtn.style.transform = `scale(${1 + (1 - scaleFactor)})`;
+            
+            const messages = [
+                "再考虑一下吧～",
+                "你真的要拒绝我吗？",
+                "我的心要碎啦💔",
+                "给彼此一个机会嘛～",
+                "这是最后的机会了哦！",
+                "你忍心看我难过吗😢",
+                "再给你一次选择机会❤️"
+            ];
+            alert(messages[Math.floor(Math.random() * messages.length)]);
+            
+            if (scaleFactor < 0.3) scaleFactor = 0.3;
+        }
+    </script>
+</body>
+</html>
